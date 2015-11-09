@@ -375,7 +375,8 @@ Public Class FrmCacheCreator
 
         StaticData.Types.Clear()
         Dim evehqData As DataSet
-        Dim strSql As String = "SELECT invTypes.*, invGroups.categoryID FROM invGroups INNER JOIN invTypes ON invGroups.groupID = invTypes.groupID where invTypes.published = 1;"
+        Dim strSql As String = ""
+        strSql &= "SELECT invTypes.*, invGroups.categoryID FROM invGroups INNER JOIN invTypes ON invGroups.groupID = invTypes.groupID "
         evehqData = DatabaseFunctions.GetStaticData(strSql)
         Dim newItem As EveType
         For Each itemRow As DataRow In evehqData.Tables(0).Rows
@@ -512,7 +513,8 @@ Public Class FrmCacheCreator
     Private Sub LoadItemGroups()
 
         StaticData.TypeGroups.Clear()
-        Using evehqData As DataSet = DatabaseFunctions.GetStaticData("SELECT * FROM invGroups inner join invCategories on invGroups.categoryID = invCategories.categoryID where invCategories.published = 1 ORDER BY groupName;")
+        Using evehqData As DataSet = DatabaseFunctions.GetStaticData("SELECT * FROM invGroups inner join invCategories on invGroups.categoryID = invCategories.categoryID ORDER BY groupName;")
+
             Dim iKey As Integer
             Dim iValue As String
             For item As Integer = 0 To evehqData.Tables(0).Rows.Count - 1
@@ -527,7 +529,7 @@ Public Class FrmCacheCreator
     Private Sub LoadGroupCats()
 
         StaticData.GroupCats.Clear()
-        Using evehqData As DataSet = DatabaseFunctions.GetStaticData("SELECT * FROM invGroups inner join invCategories on invGroups.categoryID = invCategories.categoryID where invCategories.published = 1 ORDER BY groupName;")
+        Using evehqData As DataSet = DatabaseFunctions.GetStaticData("SELECT * FROM invGroups inner join invCategories on invGroups.categoryID = invCategories.categoryID ORDER BY groupName;")
             Dim iKey As Integer
             Dim iValue As Integer
             For item As Integer = 0 To evehqData.Tables(0).Rows.Count - 1
